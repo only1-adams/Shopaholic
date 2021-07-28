@@ -1,0 +1,71 @@
+{% load static %}
+<div class="container c1">
+    <div class="logo">
+        <div class="ham">
+                    <!-- HAMBURGER -->
+            <div class="menu-wrap">
+                <input type="checkbox"  class="toggler">
+                <div class="hamburger"><div></div></div>
+                <div class="menu-list">
+                    <div>
+                        <div>
+                            <ul>
+                                <li><a href="{%url 'index' %}">Home</a></li>
+                                <li><a href="">About us</a></li>
+                                <li><a href="">Contact us</a></li>
+                                
+                                {% if user.id is not None %}
+                                    <li class="catr"><span style="color: orangered; font-weight:bold">OUR CATEGORIES</span> <a href="{% url 'category' %}">See all</a></li>
+                                
+                                    {% if category_a %}
+                                        {% for items in category_a  %}
+                                            <li><a href="{% url 'prod_list' items.id items.slug %}">{{items.title}}</a></li>
+                                        {% endfor %}
+                                    {% endif %}
+                                  
+                                    <li class="catr"><span style="color: orangered; font-weight:bold">MY ACCOUNT</li>
+                                    <li><a href="">Account Info</a></li>
+                                    <li><a href="">Logout</a></li>
+                                {% else %}
+                                    <li class="catr"><span style="color: orangered; font-weight:bold">MY ACCOUNT</li>
+                                    <li><a href="">Register</a></li>
+                                    <li><a href="">Login</a></li>
+                                {% endif %}
+                                    
+                            </ul>
+                        </div>
+                    </div>
+                </div> 
+                
+                <!-- {% if messages %}
+                    {% for message in messages  %}
+                        <div class="alert alert-success alert-{{message.tags}}" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %} -->
+                    
+            </div>
+            <img src="{% static '' %}images/SHOPCART.png" alt="">
+        </div>
+        <div class="smallacc">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="line">
+        <div class="dot">
+            <span>Twitter Bootstrap shopping cart HTML template is available @ $14</span>
+        </div>
+        <div class="sci">
+            <i class="fa fa-scissors" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="euro">
+        <span class="support">Support (24/7) : 0800 1234 678</span>
+        <br>
+        <span class="gr">Call charges may apply.</span>
+    </div>
+</div>

@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block ghead %}{% include "ghead.html" %}{% endblock ghead %}
+<div class="container-fluid">
+    {% block header %}{% include "header.html" %}{% endblock header %}
+    {% block content %}
+        <div class="container cpd dfd">
+            <div class="catgo">
+                <h6>SHOP CART</h6>
+            </div>
+        </div>
+        <div class="container spd">
+            <div class="row tabur">
+                <div class="col-lg-12 tabu">
+                    <div class="tab-hold">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>IMAGE</th>
+                                <th>PRODUCT</th>
+                                <th>PRICE</th>
+                                <th>COLOR</th>
+                                <th>QUANTITY</th>
+                                <th>TOTAL</th>
+                            </tr>
+
+                            
+                            {% if shopcart %}
+                                {% for items in shopcart  %}
+                                    <tr>
+                                        <td>
+                                            <div class="cartimg">
+                                                <img src="{{items.product.image.url}}" alt="">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p style="font-weight: bold;">{{items.product.title}}</p>
+                                        </td>
+                                        <td>
+                                            <p style="font-weight: bold;">
+                                                {% if items.discount_price %}
+                                                    {{items.discount_price | floatformat:2 | intcomma}}
+                                                {% else %}
+                                                    {{items.price | floatformat:2 | intcomma}}
+                                                {% endif %}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p style="font-weight: bold;">{{items.color}}</p>
+                                        </td>
+                                        <td>
+                                            <div class="fleco">
+                                                <a href="{% url 'order:deletefromcart' items.id %}">Remove</a>
+                                                <form action="{% url 'order:updatequantity' %}" method="POST">
+                                                {% csrf_token %}
+                                                    <div>
+                                                        <p style="font-weight: bold;">{{items.quantity}} <input type="number" name="itemquan" placeholder="Qty" style="width: 40px;" value="{{items.quantity}}" min="{{items.product.minquantity}}" max="{{items.product.quantity_instock}}"></p>
+                                                    </div>
+                                                    <div class="updateprice">
+                                                        <button class="btu" type="submit">UPDATE QUANTITY</button>
+                                                    </div>
+                                                    <input type="hidden" name="itemid" value="{{items.id}}">
+                                                </form>
+                                                
+                                            </div>
+                                        </td>
+                                        <td><p style="font-weight: bold;">Total</p></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                                
+                        </table>
+                    </div>
+                    <div class="total-price">
+                        <table>
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>400</td>
+                            </tr>
+                            <tr>
+                                <td>Shipping Fee</td>
+                                <td>400</td>
+                            </tr>
+                            <tr>
+                                <td>VAT (8.50%)</td>
+                                <td>400</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>400</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tota-price">
+                        <table>
+                            <tr>
+                                <td><button type="submit"><a href="">Continue</a></button></td>
+                                <td><button type="submit"><a href="">Checkout</a></button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="manu">
+                        <hr>
+                            <h4>Manufacturers</h4>
+                        <hr>
+                    <div class="row damu">
+                            <div class="col-lg-2">
+                                <img src="images/1.png" alt="">
+                            </div>
+                            <div class="col-lg-2">
+                                <img src="images/2.png" alt="">
+                            </div>
+                            <div class="col-lg-2">
+                                <img src="images/3.png" alt="">
+                            </div>
+                            <div class="col-lg-2">
+                                <img src="images/4.png" alt="">
+                            </div>
+                            <div class="col-lg-2">
+                                <img src="images/5.png" alt="">
+                            </div>
+                            <div class="col-lg-2">
+                                <img src="images/6.png" alt="">
+                            </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="foot-hold">
+                                    <h6>Your Account</h6>
+                                    <ul>
+                                        <li><a href=""><span>YOUR ACCOUNT</span></a></li>
+                                        <li><a href=""><span>PERSONAL INFORMATION</span></a></li>
+                                        <li><a href=""><span>ADDRESSES</span></a></li>
+                                        <li><a href=""><span>DISCOUNT</span></a></li>
+                                        <li><a href=""><span>ORDER HISTORY</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="foot-hold">
+                                    <h6>Information</h6>
+                                    <ul>
+                                        <li><a href=""><span>CONTACT</span></a></li>
+                                        <li><a href=""><span>SITEMAP</span></a></li>
+                                        <li><a href=""><span>LEGAL NOTICE</span></a></li>
+                                        <li><a href=""><span>TERMS AND CONDITIONS</span></a></li>
+                                        <li><a href=""><span>ABOUT US</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="foot-hold">
+                                    <h6>Our Offer</h6>
+                                    <ul>
+                                        <li><a href=""><span>NEW PRODUCTS</span></a></li>
+                                        <li><a href=""><span>TOP SELLERS</span></a></li>
+                                        <li><a href=""><span>SPECIALS/span></a></li>
+                                        <li><a href=""><span>MANUFACTURERS</span></a></li>
+                                        <li><a href=""><span>SUPPLIERS</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="foot-hold foot-hold1">
+                                    <h6>The Standard Chunk of Lorem</h6>
+                                    <p>
+                                        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. 
+                                        Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in
+                                        their exact original form,
+                                        accompanied by English versions from the 1914 translation by H. Rackham.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock content %}
+</div>
+<div class="container-fluid copyfoot1">
+    {% block copyfoot %}{% include "copyfoot.html" %}{% endblock copyfoot %}
+</div>
